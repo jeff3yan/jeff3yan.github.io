@@ -1,0 +1,7 @@
+#app {
+    height: 100%;
+}
+
+#app > .ProfileApp {
+    height: 100%;
+}
