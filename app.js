@@ -62,6 +62,8 @@
 
 	var _contactJs2 = _interopRequireDefault(_contactJs);
 
+	var SKILLS = [];
+
 	var Home = _react2['default'].createClass({
 	    displayName: 'Home',
 
@@ -87,7 +89,7 @@
 	                _react2['default'].createElement(
 	                    'h1',
 	                    null,
-	                    'I\'m Jeffrey Yan, engineering Ph.D. graduate from the University of Auckland and currently working as a developer.'
+	                    'I\'m Jeffrey Yan, Computer Systems Engineering Ph.D. graduate from the University of Auckland and currently working as a developer.'
 	                ),
 	                _react2['default'].createElement(
 	                    'div',
@@ -24059,33 +24061,109 @@
 /* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var ContactApp = _react2['default'].createClass({
-	    displayName: 'ContactApp',
+	var ContactApp = _react2["default"].createClass({
+	    displayName: "ContactApp",
+
+	    renderForm: function renderForm() {
+	        var valid = this.state.name && this.state.email && this.state.message;
+
+	        return _react2["default"].createElement(
+	            "div",
+	            { className: "ui form basic segment" },
+	            _react2["default"].createElement(
+	                "h2",
+	                null,
+	                "Send me a message"
+	            ),
+	            _react2["default"].createElement(
+	                "div",
+	                { className: "two fields" },
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "field" },
+	                    _react2["default"].createElement("input", { type: "email", placeholder: "Name", value: this.state.name, onChange: this.onChange.bind(this, 'name') })
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "field" },
+	                    _react2["default"].createElement("input", { type: "email", placeholder: "Email", value: this.state.email, onChange: this.onChange.bind(this, 'email') })
+	                )
+	            ),
+	            _react2["default"].createElement(
+	                "div",
+	                { className: "field" },
+	                _react2["default"].createElement("textarea", {
+	                    rows: "4",
+	                    placeholder: "Message",
+	                    style: { resize: 'none' },
+	                    value: this.state.message, onChange: this.onChange.bind(this, 'message') })
+	            ),
+	            _react2["default"].createElement(
+	                "div",
+	                { className: "ui submit button " + (valid ? '' : 'disabled'), onClick: this.submitForm },
+	                "Submit"
+	            )
+	        );
+	    },
+
+	    renderThanks: function renderThanks() {
+	        return _react2["default"].createElement(
+	            "div",
+	            { className: "ui positive message" },
+	            _react2["default"].createElement(
+	                "h2",
+	                null,
+	                "Clicking that button definitely did something, thanks ",
+	                this.state.name,
+	                "!"
+	            )
+	        );
+	    },
 
 	    render: function render() {
-	        return _react2['default'].createElement(
-	            'div',
-	            null,
-	            'Haha this is awesome'
-	        );
+	        if (!this.state.finished) {
+	            return this.renderForm();
+	        } else {
+	            return this.renderThanks();
+	        }
+	    },
+
+	    onChange: function onChange(prop, e) {
+	        var newState = {};
+	        newState[prop] = e.target.value;
+	        this.setState(newState);
+	    },
+
+	    submitForm: function submitForm() {
+	        this.setState({ finished: true });
+	    },
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            name: '',
+	            email: '',
+	            message: '',
+
+	            finished: false
+	        };
 	    }
 
 	});
 
-	exports['default'] = ContactApp;
-	module.exports = exports['default'];
+	exports["default"] = ContactApp;
+	module.exports = exports["default"];
 
 /***/ }
 /******/ ]);

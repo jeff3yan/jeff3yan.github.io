@@ -4,6 +4,10 @@ import { Router, Route, Link } from 'react-router';
 
 import Contact from './contact.js';
 
+var SKILLS = [
+
+];
+
 var Home = React.createClass({
 
     render: function() {
@@ -21,7 +25,7 @@ var Home = React.createClass({
                 
                 <div className="ui basic segment">
                     <h1>
-                        I'm Jeffrey Yan, engineering Ph.D. graduate from the University of Auckland and currently working as a developer.
+                        I'm Jeffrey Yan, Computer Systems Engineering Ph.D. graduate from the University of Auckland and currently working as a developer.
                     </h1>
 
                     <div className="ui center aligned basic segment">
