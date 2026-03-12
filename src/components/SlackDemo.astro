@@ -151,11 +151,11 @@
   </div>
 
   <!-- Step indicators -->
-  <div class="flex items-center justify-center gap-8 mt-5">
+  <div class="flex items-center justify-center gap-8 mt-10">
     {[
-      { id: 'demo-step-1', label: 'Typing command' },
-      { id: 'demo-step-2', label: 'Remoji thinking' },
-      { id: 'demo-step-3', label: 'Results' },
+      { id: 'demo-step-1', label: 'typing it in' },
+      { id: 'demo-step-2', label: "ai's on it" },
+      { id: 'demo-step-3', label: 'here we go ✨' },
     ].map((s) => (
       <div class="flex items-center gap-2">
         <div id={s.id} class="size-2 rounded-full transition-colors duration-300" style="background:#3a3a3a;"></div>
@@ -358,15 +358,30 @@
     runDemo(currentGen);
   }
 
-  // Start only when the demo is visible; restart whenever it re-enters view
+  // Only start after the user has scrolled at least once.
+  // This prevents the animation burning through on large screens
+  // where the demo happens to be in the initial viewport.
+  let hasScrolled = false;
+  let demoInView = false;
+
+  function maybeStart() {
+    if (hasScrolled && demoInView) startDemo();
+  }
+
+  window.addEventListener('scroll', () => {
+    hasScrolled = true;
+    maybeStart();
+  }, { passive: true, once: true });
+
   const root = document.getElementById('slack-demo-root')!;
   const viewportObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          startDemo();
+          demoInView = true;
+          maybeStart();
         } else {
-          // Cancel running animation when scrolled away
+          demoInView = false;
           currentGen++;
           setStep(0);
         }
