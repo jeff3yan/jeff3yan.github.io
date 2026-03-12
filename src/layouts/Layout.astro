@@ -27,5 +27,19 @@ const {
   </head>
   <body class="bg-zinc-950 text-zinc-100 antialiased">
     <slot />
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>

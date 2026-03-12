@@ -3,3 +3,14 @@
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
+
+/* Scroll-triggered fade-up */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
