@@ -97,8 +97,8 @@
 
           <!-- Typing indicator (absolutely positioned, no layout impact) -->
           <div id="demo-typing" class="absolute inset-x-0 top-0 flex items-start gap-3" style="opacity:0; transition: opacity 0.2s;">
-            <div class="size-9 rounded-lg flex items-center justify-center text-base flex-shrink-0" style="background: #4a154b;">
-              <img src="/emojis/partyparrot.gif" class="size-5 object-contain rounded-sm" alt="" />
+            <div class="size-9 rounded-lg flex items-center justify-center text-lg flex-shrink-0" style="background: #4a154b;">
+              😄
             </div>
             <div>
               <div class="flex items-baseline gap-2">
@@ -114,9 +114,9 @@
           </div>
 
           <!-- Ephemeral response (absolutely positioned, no layout impact) -->
-          <div id="demo-response" class="absolute inset-x-0 top-0 flex items-start gap-3" style="opacity:0; transition: opacity 0.25s;">
-            <div class="size-9 rounded-lg flex items-center justify-center text-base flex-shrink-0" style="background: #4a154b;">
-              <img src="/emojis/partyparrot.gif" class="size-5 object-contain rounded-sm" alt="" />
+          <div id="demo-response" class="absolute inset-x-0 top-0 flex items-start gap-3 rounded-lg px-3 py-2" style="opacity:0; transition: opacity 0.25s; background: rgba(227,196,67,0.07); border-left: 3px solid rgba(227,196,67,0.35);">
+            <div class="size-9 rounded-lg flex items-center justify-center text-lg flex-shrink-0 flex-shrink-0" style="background: #4a154b;">
+              😄
             </div>
             <div class="min-w-0">
               <div class="flex items-baseline gap-2">
@@ -296,7 +296,7 @@
     await revealEmojiRow();
 
     // Hold to read
-    await sleep(4200);
+    await sleep(9000);
 
     // Fade out response
     el('demo-response').style.transition = 'opacity 0.5s';
