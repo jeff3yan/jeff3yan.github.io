@@ -4,8 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://your-org.github.io',
-  base: '/remoji-landing',
+  site: 'https://jeff3yan.github.io',
   vite: {
     plugins: [tailwindcss()]
   }
