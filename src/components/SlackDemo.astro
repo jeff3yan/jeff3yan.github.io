@@ -1,7 +1,7 @@
 ---
 ---
 
-<div class="relative mx-auto mt-16 max-w-3xl px-6">
+<div id="slack-demo-root" class="relative mx-auto mt-16 max-w-3xl px-6">
   <!-- glow -->
   <div
     class="pointer-events-none absolute -inset-6 rounded-3xl opacity-20"
@@ -149,6 +149,20 @@
 
     </div>
   </div>
+
+  <!-- Step indicators -->
+  <div class="flex items-center justify-center gap-8 mt-5">
+    {[
+      { id: 'demo-step-1', label: 'Typing command' },
+      { id: 'demo-step-2', label: 'Remoji thinking' },
+      { id: 'demo-step-3', label: 'Results' },
+    ].map((s) => (
+      <div class="flex items-center gap-2">
+        <div id={s.id} class="size-2 rounded-full transition-colors duration-300" style="background:#3a3a3a;"></div>
+        <span class="step-label text-xs transition-colors duration-300" style="color:#4a4a4a;">{s.label}</span>
+      </div>
+    ))}
+  </div>
 </div>
 
 <style>
@@ -206,15 +220,38 @@
   const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   let setIndex = 0;
+  // Incremented on every cancel. Each runDemo call captures its own gen
+  // and rejects sleeps the moment the gen changes.
+  let currentGen = 0;
 
-  const sleep = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
   const el = (id: string) => document.getElementById(id) as HTMLElement;
+
+  // Cancellable sleep — rejects immediately if gen has been superseded
+  function sleep(ms: number, gen: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const t = setTimeout(() => {
+        if (currentGen === gen) resolve(); else reject();
+      }, ms);
+      // Also poll immediately in case gen already changed before the timer fires
+      if (currentGen !== gen) { clearTimeout(t); reject(); }
+    });
+  }
+
+  // Step indicator: 1 = typing, 2 = thinking, 3 = results, 0 = idle
+  function setStep(n: number) {
+    for (let i = 1; i <= 3; i++) {
+      const dot = el(`demo-step-${i}`);
+      const label = dot.nextElementSibling as HTMLElement;
+      const active = i === n;
+      dot.style.background   = active ? '#a78bfa' : '#3a3a3a';
+      label.style.color      = active ? '#c4b5fd' : '#4a4a4a';
+    }
+  }
 
   function buildEmojiRow(emojis: Emoji[]) {
     const row = el('demo-emoji-row');
     row.innerHTML = '';
 
-    // Source emoji
     const src = document.createElement('img');
     src.src = `${BASE}/emojis/party_parrot_animated.gif`;
     src.alt = ':partyparrot:';
@@ -223,13 +260,11 @@
     src.style.cssText = 'width:22px; height:22px; opacity:0; transition: opacity 0.15s;';
     row.appendChild(src);
 
-    // Arrow
     const arrow = document.createElement('span');
     arrow.textContent = '→';
     arrow.style.cssText = 'color:#9e9e9e; font-size:13px; margin: 0 2px; flex-shrink:0;';
     row.appendChild(arrow);
 
-    // Result emojis
     for (const e of emojis) {
       const img = document.createElement('img');
       img.src = `${BASE}/emojis/${e.file}`;
@@ -241,72 +276,103 @@
     }
   }
 
-  async function revealEmojiRow() {
+  async function revealEmojiRow(gen: number) {
     const imgs = el('demo-emoji-row').querySelectorAll('img');
     for (let i = 0; i < imgs.length; i++) {
       (imgs[i] as HTMLElement).style.opacity = '1';
-      await sleep(70);
+      await sleep(70, gen);
     }
   }
 
-  async function runDemo() {
-    const emojis = emojiSets[setIndex % emojiSets.length];
-    setIndex++;
+  async function runDemo(gen: number) {
+    try {
+      const emojis = emojiSets[setIndex % emojiSets.length];
+      setIndex++;
 
-    // Reset state
-    el('demo-typing').style.opacity = '0';
-    el('demo-response').style.opacity = '0';
-    el('demo-input-text').textContent = '';
-    buildEmojiRow(emojis);
+      // Reset
+      setStep(0);
+      el('demo-typing').style.opacity = '0';
+      el('demo-response').style.opacity = '0';
+      el('demo-input-text').textContent = '';
+      const cursor = el('demo-cursor');
+      cursor.classList.remove('blinking');
+      cursor.style.opacity = '0';
+      buildEmojiRow(emojis);
 
-    await sleep(900);
+      await sleep(900, gen);
 
-    // Show blinking cursor
-    const cursor = el('demo-cursor');
-    cursor.style.opacity = '1';
-    cursor.classList.add('blinking');
+      // --- Step 1: Typing ---
+      setStep(1);
+      cursor.style.opacity = '1';
+      cursor.classList.add('blinking');
+      await sleep(500, gen);
 
-    await sleep(500);
+      const inputEl = el('demo-input-text');
+      for (let i = 0; i <= COMMAND.length; i++) {
+        inputEl.textContent = COMMAND.slice(0, i);
+        await sleep(55 + Math.random() * 35, gen);
+      }
 
-    // Type the command
-    const inputEl = el('demo-input-text');
-    for (let i = 0; i <= COMMAND.length; i++) {
-      inputEl.textContent = COMMAND.slice(0, i);
-      await sleep(55 + Math.random() * 35);
+      await sleep(400, gen);
+      cursor.classList.remove('blinking');
+      cursor.style.opacity = '0';
+      inputEl.textContent = '';
+      await sleep(200, gen);
+
+      // --- Step 2: Thinking ---
+      setStep(2);
+      el('demo-typing').style.opacity = '1';
+      await sleep(1300, gen);
+      el('demo-typing').style.opacity = '0';
+      await sleep(80, gen);
+
+      // --- Step 3: Results ---
+      setStep(3);
+      el('demo-response').style.opacity = '1';
+      await sleep(120, gen);
+      await revealEmojiRow(gen);
+
+      await sleep(9000, gen);
+
+      // Fade out and loop
+      setStep(0);
+      el('demo-response').style.transition = 'opacity 0.5s';
+      el('demo-response').style.opacity = '0';
+      await sleep(600, gen);
+      el('demo-response').style.transition = 'opacity 0.25s';
+
+      runDemo(gen);
+    } catch {
+      // Generation was superseded — clean up visually
+      setStep(0);
+      el('demo-typing').style.opacity = '0';
+      el('demo-response').style.opacity = '0';
+      el('demo-input-text').textContent = '';
+      el('demo-cursor').classList.remove('blinking');
+      el('demo-cursor').style.opacity = '0';
     }
-
-    // Pause before "send"
-    await sleep(400);
-
-    // Send: clear input (commands disappear in Slack)
-    cursor.classList.remove('blinking');
-    cursor.style.opacity = '0';
-    inputEl.textContent = '';
-
-    await sleep(200);
-
-    // Remoji typing indicator
-    el('demo-typing').style.opacity = '1';
-    await sleep(1300);
-    el('demo-typing').style.opacity = '0';
-    await sleep(80);
-
-    // Ephemeral response appears
-    el('demo-response').style.opacity = '1';
-    await sleep(120);
-    await revealEmojiRow();
-
-    // Hold to read
-    await sleep(9000);
-
-    // Fade out response
-    el('demo-response').style.transition = 'opacity 0.5s';
-    el('demo-response').style.opacity = '0';
-    await sleep(600);
-    el('demo-response').style.transition = 'opacity 0.25s';
-
-    runDemo();
   }
 
-  setTimeout(runDemo, 600);
+  function startDemo() {
+    currentGen++;
+    runDemo(currentGen);
+  }
+
+  // Start only when the demo is visible; restart whenever it re-enters view
+  const root = document.getElementById('slack-demo-root')!;
+  const viewportObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startDemo();
+        } else {
+          // Cancel running animation when scrolled away
+          currentGen++;
+          setStep(0);
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+  viewportObserver.observe(root);
 </script>
