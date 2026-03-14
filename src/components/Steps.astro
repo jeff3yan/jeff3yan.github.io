@@ -3,26 +3,26 @@ const steps = [
   {
     number: '1',
     title: 'Add to Slack',
-    description: 'Click the button and authorize Remoji in your workspace.',
+    description: 'Approve the install once and Remoji connects to your custom emoji list.',
   },
   {
     number: '2',
-    title: 'Remoji learns your emojis',
-    description: 'In the background, Remoji reads every custom emoji and builds an understanding of what each one looks like, its mood, and meaning.',
+    title: 'We index your emoji library',
+    description: 'Remoji processes your custom emojis in the background and lets you know when it is ready.',
   },
   {
     number: '3',
     title: 'Find any emoji, instantly',
-    description: 'Type /remoji :any-emoji: in any channel. Your whole team gets recommendations drawn from your own collection.',
+    description: 'Type /remoji :any-emoji: in any channel. Everyone gets suggestions from your own collection.',
   },
 ];
 ---
 
-<section class="py-24 px-6 border-t border-white/5">
-  <div class="mx-auto max-w-5xl">
+<section id="how" class="py-24 px-6 border-t border-white/10">
+  <div class="mx-auto max-w-6xl">
     <div class="text-center mb-16 fade-up">
-      <h2 class="text-3xl font-bold text-white sm:text-4xl">Install once, works for your whole team</h2>
-      <p class="mt-4 text-zinc-400">No configuration. No maintenance. Just install and go.</p>
+      <h2 class="font-display text-3xl font-semibold text-white sm:text-4xl">Install once, works for your whole team</h2>
+      <p class="mt-4 text-slate-400">No configuration. No maintenance. Just install and go.</p>
     </div>
 
     <div class="grid sm:grid-cols-3 gap-8">
@@ -32,13 +32,13 @@ const steps = [
           style={`transition-delay: ${i * 100}ms`}
         >
           <div class="mb-5 flex items-center gap-4">
-            <div class="flex size-10 items-center justify-center rounded-full border border-violet-500/30 bg-violet-500/10 text-sm font-bold text-violet-300 flex-shrink-0">
+            <div class="flex size-10 items-center justify-center rounded-full border border-emerald-200/30 bg-emerald-200/10 text-sm font-bold text-emerald-100 flex-shrink-0">
               {step.number}
             </div>
-            <div class="hidden sm:block h-px flex-1 bg-gradient-to-r from-violet-500/20 to-transparent"></div>
+            <div class="hidden sm:block h-px flex-1 bg-gradient-to-r from-emerald-200/30 to-transparent"></div>
           </div>
           <h3 class="text-base font-semibold text-white mb-2">{step.title}</h3>
-          <p class="text-sm text-zinc-400 leading-relaxed">{step.description}</p>
+          <p class="text-sm text-slate-400 leading-relaxed">{step.description}</p>
         </div>
       ))}
     </div>

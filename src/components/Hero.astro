@@ -1,37 +1,42 @@
 ---
 ---
 
-<section class="relative pt-32 pb-16 px-6">
-  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent_60%,rgb(9,9,11)_100%)]"></div>
-  <div
-    class="pointer-events-none absolute inset-0 opacity-25"
-    style="background-image: radial-gradient(ellipse at 50% -10%, rgb(139,92,246) 0%, transparent 55%);"
-  ></div>
+<section class="relative pt-32 pb-20 px-6 overflow-hidden">
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(94,234,212,0.18),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(251,191,36,0.14),transparent_45%)]"></div>
+  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,16,20,0)_40%,rgba(11,16,20,1)_100%)]"></div>
 
-  <div class="relative mx-auto max-w-3xl text-center">
-    <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-300">
-      ✨ AI emoji search for Slack
+  <div class="relative mx-auto max-w-4xl text-center">
+    <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200/20 bg-emerald-300/10 px-3 py-1 text-xs font-medium text-emerald-100">
+      ✨ AI emoji recommendations for Slack
     </div>
 
-    <h1 class="text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+    <h1 class="font-display text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
       The perfect emoji<br />
-      <span class="text-violet-400">is already in your workspace</span>
+      <span class="text-emerald-200">is already in your workspace</span>
     </h1>
 
-    <p class="mt-6 text-lg leading-8 text-zinc-400 max-w-2xl mx-auto">
-      Your team has hundreds of custom emojis. Remoji helps everyone find the right one — just type <code class="rounded bg-zinc-800 px-1.5 py-0.5 text-sm font-mono text-violet-300">/remoji :any-emoji:</code> and get instant suggestions from your own collection.
+    <p class="mt-6 text-lg leading-8 text-slate-300 max-w-2xl mx-auto">
+      Remoji lets anyone search your custom emoji library by meaning, vibe, or a similar emoji. Type
+      <code class="rounded bg-[#111827] px-1.5 py-0.5 text-sm font-mono text-emerald-200">/remoji :any-emoji:</code>
+      and get instant suggestions from your own collection.
     </p>
 
     <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
       <a
         href="https://slack.com/oauth/v2/authorize"
-        class="inline-flex items-center gap-3 rounded-xl bg-[#4A154B] px-6 py-3 text-base font-semibold text-white shadow-lg hover:bg-[#3d1140] transition-colors"
+        class="inline-flex items-center gap-3 rounded-full bg-[#1f2937] px-6 py-3 text-base font-semibold text-white shadow-lg hover:bg-[#111827] transition-colors border border-white/10"
       >
         <img src="https://a.slack-edge.com/80588/marketing/img/icons/icon_slack_hash_colored.png" alt="" class="size-5" />
         Add to Slack
       </a>
+      <a
+        href="#pricing"
+        class="inline-flex items-center gap-2 rounded-full border border-emerald-200/30 px-6 py-3 text-base font-semibold text-emerald-100 hover:border-emerald-200/60 hover:text-white transition-colors"
+      >
+        See pricing tiers
+      </a>
     </div>
 
-    <p class="mt-4 text-xs text-zinc-600">Works with any Slack workspace</p>
+    <p class="mt-4 text-xs text-slate-400">Works with any Slack workspace. No message access.</p>
   </div>
 </section>

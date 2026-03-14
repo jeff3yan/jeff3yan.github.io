@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title = 'Remoji — AI emoji recommendations for Slack',
-  description = 'Remoji recommends diverse custom emojis from your Slack workspace using AI. Run /remoji :emoji: to find similar emojis instantly.',
+  description = 'Remoji makes your custom Slack emojis searchable by meaning, vibe, or similar emojis. Install once and every team member can find the right emoji instantly.',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -38,9 +38,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-zinc-950 text-zinc-100 antialiased">
+  <body class="bg-[#0b1014] text-slate-100 antialiased">
     <slot />
     <script>
       const observer = new IntersectionObserver(

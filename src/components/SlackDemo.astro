@@ -5,7 +5,7 @@
   <!-- glow -->
   <div
     class="pointer-events-none absolute -inset-6 rounded-3xl opacity-20"
-    style="background: radial-gradient(ellipse at 50% 50%, rgb(139,92,246), transparent 70%);"
+    style="background: radial-gradient(ellipse at 50% 50%, rgb(20,184,166), transparent 70%);"
   ></div>
 
   <!-- Slack window -->
@@ -30,7 +30,7 @@
         ].map(ch => (
           <div
             class={`px-2 py-1 rounded flex items-center gap-2 cursor-default text-sm ${ch.active ? 'font-medium' : ''}`}
-            style={ch.active ? 'background: rgba(139,92,246,0.25); color: #fff;' : 'color: #9e9e9e;'}
+            style={ch.active ? 'background: rgba(20,184,166,0.25); color: #fff;' : 'color: #9e9e9e;'}
           >
             <span style="color:#616061;">#</span>
             <span class="truncate">{ch.name}</span>
@@ -97,7 +97,7 @@
 
           <!-- Typing indicator (absolutely positioned, no layout impact) -->
           <div id="demo-typing" class="absolute inset-x-0 top-0 flex items-start gap-3" style="opacity:0; transition: opacity 0.2s;">
-            <div class="size-9 rounded-lg flex items-center justify-center text-lg flex-shrink-0" style="background: #4a154b;">
+            <div class="size-9 rounded-lg flex items-center justify-center text-lg flex-shrink-0" style="background: #0f766e;">
               😄
             </div>
             <div>
@@ -114,8 +114,8 @@
           </div>
 
           <!-- Ephemeral response (absolutely positioned, no layout impact) -->
-          <div id="demo-response" class="absolute inset-x-0 top-0 flex items-start gap-3 rounded-lg px-3 py-2" style="opacity:0; transition: opacity 0.25s; background: rgba(227,196,67,0.07); border-left: 3px solid rgba(227,196,67,0.35);">
-            <div class="size-9 rounded-lg flex items-center justify-center text-lg flex-shrink-0 flex-shrink-0" style="background: #4a154b;">
+          <div id="demo-response" class="absolute inset-x-0 top-0 flex items-start gap-3 rounded-lg px-3 py-2" style="opacity:0; transition: opacity 0.25s; background: rgba(16,185,129,0.08); border-left: 3px solid rgba(16,185,129,0.35);">
+            <div class="size-9 rounded-lg flex items-center justify-center text-lg flex-shrink-0 flex-shrink-0" style="background: #0f766e;">
               😄
             </div>
             <div class="min-w-0">

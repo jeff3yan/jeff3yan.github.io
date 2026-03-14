@@ -1,0 +1,63 @@
+---
+const tiers = [
+  {
+    name: 'Free',
+    emojiLimit: 'Up to 500 custom emojis',
+    bestFor: 'Small teams trying Remoji',
+    note: 'Includes emoji search, recommendations, and automatic updates.',
+  },
+  {
+    name: 'Pro',
+    emojiLimit: 'Up to 5,000 custom emojis',
+    bestFor: 'Mid-size companies with active emoji culture',
+    note: 'Priority support and faster turnaround for new features.',
+  },
+  {
+    name: 'Business',
+    emojiLimit: 'Unlimited custom emojis',
+    bestFor: 'Large orgs with security and SLA needs',
+    note: 'Best-effort email support, priority for critical issues, and early-access roadmap input.',
+  },
+];
+---
+
+<section id="pricing" class="py-24 px-6 border-t border-white/10">
+  <div class="mx-auto max-w-6xl">
+    <div class="text-center mb-14 fade-up">
+      <h2 class="font-display text-3xl font-semibold text-white sm:text-4xl">Plans that scale with your emoji library</h2>
+      <p class="mt-4 text-slate-400">
+        Pricing is based on the size of your custom emoji collection, not per seat.
+      </p>
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-3">
+      {tiers.map((tier, i) => (
+        <div
+          class="fade-up rounded-2xl border border-white/10 bg-white/[0.03] p-6 flex flex-col gap-4"
+          style={`transition-delay: ${i * 90}ms`}
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="font-display text-xl font-semibold text-white">{tier.name}</h3>
+            <span class="text-xs uppercase tracking-wide text-emerald-200/80">Workspace plan</span>
+          </div>
+          <div class="text-sm text-slate-300 font-semibold">{tier.emojiLimit}</div>
+          <p class="text-sm text-slate-400">{tier.bestFor}</p>
+          <p class="text-sm text-slate-400">{tier.note}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 fade-up rounded-2xl border border-emerald-200/20 bg-emerald-200/10 px-6 py-5 text-slate-200">
+      <div class="font-semibold">Pilot pricing available now</div>
+      <p class="mt-2 text-sm text-slate-300">
+        We are finalizing list pricing with early customers. Tell us your emoji count and we will recommend the right tier.
+      </p>
+      <a
+        href="mailto:hello@remoji.ai"
+        class="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-200/40 px-5 py-2 text-sm font-semibold text-emerald-100 hover:border-emerald-200/70 hover:text-white transition-colors"
+      >
+        Contact sales
+      </a>
+    </div>
+  </div>
+</section>
