@@ -45,7 +45,7 @@ const features = [
         >
           <div class="mb-4">
             {f.gif
-              ? <img src={`/emojis/${f.gif}`} alt="" class="size-8 object-contain" />
+              ? <img src={`/emojis/${f.gif}`} alt="" class="size-8 object-contain" loading="lazy" />
               : <span class="text-3xl">{f.icon}</span>
             }
           </div>

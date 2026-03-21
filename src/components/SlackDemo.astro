@@ -192,9 +192,21 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    .typing-dot {
+      animation: none;
+      opacity: 0.6;
+    }
+    #demo-cursor.blinking {
+      animation: none;
+      opacity: 1;
+    }
+  }
 </style>
 
 <script>
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const COMMAND = '/remoji :partyparrot:';
 
   type Emoji = { name: string; file: string };
@@ -266,6 +278,7 @@
     src.alt = ':partyparrot:';
     src.title = ':partyparrot:';
     src.className = 'object-contain';
+    src.loading = 'lazy';
     src.style.cssText = 'width:22px; height:22px; opacity:0; transition: opacity 0.15s;';
     row.appendChild(src);
 
@@ -280,6 +293,7 @@
       img.alt = `:${e.name}:`;
       img.title = `:${e.name}:`;
       img.className = 'object-contain';
+      img.loading = 'lazy';
       img.style.cssText = 'width:22px; height:22px; opacity:0; transition: opacity 0.15s;';
       row.appendChild(img);
     }
@@ -388,7 +402,7 @@
   function maybeStart() {
     if (hasScrolled && demoInView) {
       hideHint();
-      startDemo();
+      if (!prefersReducedMotion) startDemo();
     }
   }
 
@@ -409,8 +423,10 @@
         } else {
           demoInView = false;
           hideHint();
-          currentGen++;
-          setStep(0);
+          if (!prefersReducedMotion) {
+            currentGen++;
+            setStep(0);
+          }
         }
       });
     },
