@@ -150,8 +150,17 @@
     </div>
   </div>
 
+  <!-- Watch demo hint — visible when demo is in view but waiting for scroll -->
+  <div id="demo-watch-hint" class="flex items-center justify-center gap-2 mt-6 transition-opacity duration-300" style="opacity:0; pointer-events:none;">
+    <span class="relative flex size-2">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full size-2 bg-teal-500"></span>
+    </span>
+    <span class="text-xs text-slate-400">Scroll to watch the demo</span>
+  </div>
+
   <!-- Step indicators -->
-  <div class="flex items-center justify-center gap-8 mt-10">
+  <div class="flex items-center justify-center gap-8 mt-4">
     {[
       { id: 'demo-step-1', label: 'typing it in' },
       { id: 'demo-step-2', label: 'remojiing...' },
@@ -358,6 +367,18 @@
     runDemo(currentGen);
   }
 
+  const hint = document.getElementById('demo-watch-hint')!;
+
+  function showHint() {
+    hint.style.opacity = '1';
+    hint.style.pointerEvents = 'auto';
+  }
+
+  function hideHint() {
+    hint.style.opacity = '0';
+    hint.style.pointerEvents = 'none';
+  }
+
   // Only start after the user has scrolled at least once.
   // This prevents the animation burning through on large screens
   // where the demo happens to be in the initial viewport.
@@ -365,11 +386,15 @@
   let demoInView = false;
 
   function maybeStart() {
-    if (hasScrolled && demoInView) startDemo();
+    if (hasScrolled && demoInView) {
+      hideHint();
+      startDemo();
+    }
   }
 
   window.addEventListener('scroll', () => {
     hasScrolled = true;
+    hideHint();
     maybeStart();
   }, { passive: true, once: true });
 
@@ -379,9 +404,11 @@
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           demoInView = true;
+          if (!hasScrolled) showHint();
           maybeStart();
         } else {
           demoInView = false;
+          hideHint();
           currentGen++;
           setStep(0);
         }
