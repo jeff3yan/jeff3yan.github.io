@@ -1,39 +1,23 @@
 ---
 const items = [
-  {
-    title: 'No message access',
-    description: 'Remoji reads your custom emoji list only. It does not read messages or channel content.',
-  },
-  {
-    title: 'Scoped permissions',
-    description: 'Slack permissions are limited to what the app needs to respond to /remoji and manage your emoji index.',
-  },
-  {
-    title: 'Workspace isolation',
-    description: 'Your emoji data stays tied to your workspace and is never shared across companies.',
-  },
-  {
-    title: 'Enterprise-ready',
-    description: 'Enterprise-grade infrastructure with isolated workspaces, audit-ready data handling, and no emoji data stored on our servers.',
-  },
+  { icon: '🔒', label: 'No message access', detail: 'Reads emoji list only' },
+  { icon: '🎯', label: 'Scoped permissions', detail: 'Minimal Slack access' },
+  { icon: '🏢', label: 'Workspace isolation', detail: 'Your data stays yours' },
+  { icon: '✅', label: 'Audit-ready', detail: 'Enterprise-grade infra' },
 ];
 ---
 
-<section id="security" class="py-24 px-6 border-t border-white/10">
+<section id="security" class="py-16 px-6 border-t border-white/10">
   <div class="mx-auto max-w-6xl">
-    <div class="text-center mb-14 fade-up">
-      <h2 class="font-display text-3xl font-semibold text-white sm:text-4xl">Security and admin confidence</h2>
-      <p class="mt-4 text-slate-400">Built to satisfy security reviews without slowing down the team.</p>
+    <div class="fade-up text-center mb-8">
+      <p class="text-sm font-medium text-slate-400 uppercase tracking-wide">Built to pass security reviews</p>
     </div>
-
-    <div class="grid gap-6 md:grid-cols-2">
-      {items.map((item, i) => (
-        <div
-          class="fade-up rounded-2xl border border-white/10 bg-white/[0.03] p-6"
-          style={`transition-delay: ${i * 80}ms`}
-        >
-          <h3 class="text-base font-semibold text-white mb-2">{item.title}</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">{item.description}</p>
+    <div class="fade-up grid grid-cols-2 sm:grid-cols-4 gap-4">
+      {items.map(item => (
+        <div class="flex flex-col items-center gap-2 rounded-xl border border-white/8 bg-white/[0.02] px-4 py-5 text-center">
+          <span class="text-2xl">{item.icon}</span>
+          <span class="text-sm font-semibold text-white">{item.label}</span>
+          <span class="text-xs text-slate-500">{item.detail}</span>
         </div>
       ))}
     </div>

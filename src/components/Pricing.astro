@@ -6,7 +6,12 @@ const tiers = [
     period: 'forever',
     emojiLimit: 'Up to 500 custom emojis',
     bestFor: 'Small teams trying Remoji',
-    note: 'Includes emoji search, recommendations, and automatic updates.',
+    features: [
+      'Emoji search & recommendations',
+      'Automatic library updates',
+      'All team members can use /remoji',
+      'Self-serve billing portal',
+    ],
     highlighted: false,
     ctaLabel: 'Add to Slack — free',
     ctaHref: 'https://api.getremoji.com/slack/install',
@@ -17,7 +22,12 @@ const tiers = [
     period: 'per month',
     emojiLimit: 'Up to 5,000 custom emojis',
     bestFor: 'Mid-size companies with active emoji culture',
-    note: 'Priority support and faster turnaround for new features.',
+    features: [
+      'Everything in Free',
+      'Priority support',
+      'Faster turnaround on new features',
+      '14-day free trial',
+    ],
     highlighted: true,
     ctaLabel: 'Get started',
     ctaHref: 'https://api.getremoji.com/slack/install',
@@ -28,7 +38,12 @@ const tiers = [
     period: 'per month',
     emojiLimit: 'Unlimited custom emojis',
     bestFor: 'Large orgs with security and SLA needs',
-    note: 'Best-effort email support, priority for critical issues, and early-access roadmap input.',
+    features: [
+      'Everything in Pro',
+      'Priority response for critical issues',
+      'Early-access roadmap input',
+      'Audit-ready data handling',
+    ],
     highlighted: false,
     ctaLabel: 'Get started',
     ctaHref: 'https://api.getremoji.com/slack/install',
@@ -61,7 +76,16 @@ const tiers = [
           </div>
           <div class="text-sm text-slate-300 font-semibold">{tier.emojiLimit}</div>
           <p class="text-sm text-slate-400">{tier.bestFor}</p>
-          <p class="text-sm text-slate-400">{tier.note}</p>
+          <ul class="space-y-1.5 pt-1">
+            {tier.features.map(f => (
+              <li class="flex items-start gap-2 text-sm text-slate-400">
+                <svg class="size-4 flex-shrink-0 mt-0.5 text-emerald-400" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {f}
+              </li>
+            ))}
+          </ul>
           <div class="mt-auto pt-2">
             <a
               href={tier.ctaHref}
