@@ -7,22 +7,30 @@
 
   <div class="relative mx-auto max-w-4xl text-center">
     <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200/20 bg-emerald-300/10 px-3 py-1 text-xs font-medium text-emerald-100">
-      ✨ AI emoji recommendations for Slack
+      ✨ Search custom Slack emojis by meaning
     </div>
 
     <h1 class="font-display text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
-      Your custom emojis,<br /><span class="text-emerald-200">finally discoverable</span>
+      Find the Slack emoji<br /><span class="text-emerald-200">nobody remembers the name of</span>
     </h1>
 
     <p class="mt-6 text-lg leading-8 text-slate-300 max-w-2xl mx-auto">
-      Your workspace has hundreds of custom emojis — but most go unused because nobody can find them. Remoji lets anyone search by meaning, vibe, or a similar emoji. Type
-      <code class="rounded bg-[#111827] px-1.5 py-0.5 text-sm font-mono text-emerald-200">/remoji :any-emoji:</code>
-      and get instant suggestions from your own collection.
+      Your workspace has hundreds of custom emojis — but most go unused because nobody can find them. Remoji makes your own emoji library searchable by meaning, vibe, or a similar emoji. Type
+      <code class="rounded bg-[#111827] px-1.5 py-0.5 text-sm font-mono text-emerald-200">/remoji :party_blob:</code>
+      and get suggestions from your team’s collection.
     </p>
+
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-300">
+      <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">✅ Reads emoji list only</span>
+      <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">✅ No messages, DMs, channels, or files</span>
+      <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">✅ Installs once for the whole workspace</span>
+    </div>
 
     <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
       <a
         href="https://api.getremoji.com/slack/install"
+        data-track="add_to_slack"
+        data-track-location="hero"
         class="inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 shadow-lg hover:bg-slate-100 transition-colors"
       >
         <img src="/slack-icon.png" alt="" class="size-5" />
@@ -36,6 +44,6 @@
       </a>
     </div>
 
-    <p class="mt-4 text-xs text-slate-400">Works with any Slack workspace. No message access.</p>
+    <p class="mt-4 text-xs text-slate-400">Free up to 500 custom emojis. Paid plans are per workspace, not per seat.</p>
   </div>
 </section>

@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import type { SeoPageData } from '../data/seo-pages';
+
+interface Props {
+  page: SeoPageData;
+}
+
+const { page } = Astro.props;
+const installUrl = 'https://api.getremoji.com/slack/install';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: page.faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Layout title={page.title} description={page.description}>
+  <Nav />
+  <main id="main-content">
+    <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(94,234,212,0.18),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(251,191,36,0.12),transparent_45%)]"></div>
+      <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(11,16,20,0)_40%,rgba(11,16,20,1)_100%)]"></div>
+
+      <div class="relative mx-auto max-w-5xl">
+        <div class="max-w-3xl">
+          <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200/20 bg-emerald-300/10 px-3 py-1 text-xs font-medium text-emerald-100">
+            {page.eyebrow}
+          </div>
+          <h1 class="font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            {page.h1}
+          </h1>
+          <p class="mt-6 text-lg leading-8 text-slate-300">
+            {page.intro}
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <a
+              href={installUrl}
+              data-track="add_to_slack"
+              data-track-location={`seo-hero-${page.slug}`}
+              class="inline-flex items-center justify-center gap-3 rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-900 shadow-lg hover:bg-slate-100 transition-colors"
+            >
+              <img src="/slack-icon.png" alt="" class="size-5" />
+              Add to Slack
+            </a>
+            <a
+              href="/#pricing"
+              class="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-200/30 px-6 py-3 text-base font-semibold text-emerald-100 hover:border-emerald-200/60 hover:text-white transition-colors"
+            >
+              See pricing
+            </a>
+          </div>
+          <div class="mt-5 flex flex-wrap gap-2 text-xs text-slate-300">
+            <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">✅ Emoji list only</span>
+            <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">✅ No messages, DMs, channels, or files</span>
+            <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">✅ Per-workspace pricing</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 pb-20">
+      <div class="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <aside class="fade-up rounded-3xl border border-emerald-200/20 bg-emerald-300/[0.06] p-6 h-fit">
+          <h2 class="font-display text-2xl font-semibold text-white">What Remoji gives you</h2>
+          <ul class="mt-5 space-y-3">
+            {page.bullets.map((bullet) => (
+              <li class="flex gap-3 text-sm leading-6 text-slate-300">
+                <span class="mt-1 text-emerald-300">✦</span>
+                <span>{bullet}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-6 rounded-2xl border border-white/10 bg-[#111827]/80 p-4 font-mono text-sm text-slate-300">
+            <div class="text-slate-500">Try in Slack</div>
+            <div class="mt-2 text-emerald-200">/remoji :party_blob:</div>
+            <div class="mt-1 text-amber-200">/remoji explore :shipit:</div>
+          </div>
+        </aside>
+
+        <div class="space-y-6">
+          {page.sections.map((section, i) => (
+            <article class="fade-up rounded-3xl border border-white/10 bg-white/[0.03] p-6" style={`transition-delay: ${i * 80}ms`}>
+              <h2 class="font-display text-2xl font-semibold text-white">{section.title}</h2>
+              <p class="mt-3 leading-7 text-slate-300">{section.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 pb-24">
+      <div class="mx-auto max-w-5xl rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+        <h2 class="font-display text-3xl font-semibold text-white">Questions about {page.primaryKeyword}?</h2>
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+          {page.faqs.map((faq) => (
+            <div class="rounded-2xl border border-white/10 bg-[#0f1720] p-5">
+              <h3 class="font-semibold text-white">{faq.question}</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-400">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+        <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-emerald-200/20 bg-emerald-300/[0.06] p-5">
+          <div>
+            <h3 class="font-display text-xl font-semibold text-white">Make your team’s emoji library searchable.</h3>
+            <p class="mt-1 text-sm text-slate-400">Free for workspaces with up to 500 custom emojis.</p>
+          </div>
+          <a
+            href={installUrl}
+            data-track="add_to_slack"
+            data-track-location={`seo-bottom-${page.slug}`}
+            class="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 hover:bg-slate-100 transition-colors"
+          >
+            <img src="/slack-icon.png" alt="" class="size-4" />
+            Add to Slack
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</Layout>
