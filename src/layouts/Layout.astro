@@ -66,6 +66,68 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         { threshold: 0.1 }
       );
       document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+
+      const attributionKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'ref'];
+      const currentUrl = new URL(window.location.href);
+      const storedAttribution = JSON.parse(localStorage.getItem('remoji_attribution') || '{}');
+      let attributionChanged = false;
+
+      attributionKeys.forEach((key) => {
+        const value = currentUrl.searchParams.get(key);
+        if (value) {
+          storedAttribution[key] = value;
+          attributionChanged = true;
+        }
+      });
+
+      if (attributionChanged) {
+        storedAttribution.landing_path = window.location.pathname;
+        storedAttribution.landed_at = new Date().toISOString();
+        localStorage.setItem('remoji_attribution', JSON.stringify(storedAttribution));
+      }
+
+      function track(eventName, properties = {}) {
+        const payload = {
+          event: eventName,
+          page: window.location.pathname,
+          ...storedAttribution,
+          ...properties,
+        };
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(payload);
+
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', eventName, payload);
+        }
+        if (typeof window.plausible === 'function') {
+          window.plausible(eventName, { props: payload });
+        }
+        if (window.posthog && typeof window.posthog.capture === 'function') {
+          window.posthog.capture(eventName, payload);
+        }
+      }
+
+      document.querySelectorAll('a[href^="https://api.getremoji.com/slack/install"]').forEach((link) => {
+        const url = new URL(link.href);
+        Object.entries(storedAttribution).forEach(([key, value]) => {
+          if (attributionKeys.includes(key) && typeof value === 'string') {
+            url.searchParams.set(key, value);
+          }
+        });
+        url.searchParams.set('landing_path', window.location.pathname);
+        link.href = url.toString();
+        link.setAttribute('data-track', link.getAttribute('data-track') || 'add_to_slack');
+      });
+
+      document.querySelectorAll('[data-track]').forEach((el) => {
+        el.addEventListener('click', () => {
+          track(el.getAttribute('data-track'), {
+            location: el.getAttribute('data-track-location') || undefined,
+            href: el.getAttribute('href') || undefined,
+          });
+        });
+      });
     </script>
   </body>
 </html>
